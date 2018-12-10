@@ -12,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class TesteFrames_e_Janelas {
 	
 	private WebDriver driver;
+	private MyDSL dsl;
 	
 	@Before
 	public void before() {
@@ -20,6 +21,7 @@ public class TesteFrames_e_Janelas {
 		driver.manage().window().setPosition(new Point(0,0));
 		driver.manage().window().setSize(new Dimension(700, 700));
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		dsl = new MyDSL(driver);
 	}
 	
 	@After
@@ -32,7 +34,8 @@ public class TesteFrames_e_Janelas {
 	@Test
 	public void testeFrame() {
 		driver.switchTo().frame("frame1");
-		driver.findElement(By.id("frameButton")).click();
+		//driver.findElement(By.id("frameButton")).click();
+		dsl.clicar("frameButton");
 		Alert alert = driver.switchTo().alert();
 		String msg = alert.getText();
 		Assert.assertEquals("Frame OK!", msg);
@@ -40,12 +43,14 @@ public class TesteFrames_e_Janelas {
 		
 		driver.switchTo().defaultContent();
 		
-		driver.findElement(By.id("elementosForm:nome")).sendKeys(msg);
+		//driver.findElement(By.id("elementosForm:nome")).sendKeys(msg);
+		dsl.escrever("elementosForm:nome", msg);
 	}
 	
 	@Test
 	public void testeJanela() {
-		driver.findElement(By.id("buttonPopUpEasy")).click();
+		//driver.findElement(By.id("buttonPopUpEasy")).click();
+		dsl.clicar("buttonPopUpEasy");
 		driver.switchTo().window("Popup");
 		driver.findElement(By.tagName("textarea")).sendKeys("Deu certo?");
 		driver.close();
@@ -57,7 +62,8 @@ public class TesteFrames_e_Janelas {
 	
 	@Test
 	public void testeJanelaSemTitulo() {
-		driver.findElement(By.id("buttonPopUpHard")).click();
+		//driver.findElement(By.id("buttonPopUpHard")).click();
+		dsl.clicar("buttonPopUpHard");
 		System.out.println(driver.getWindowHandle()); //id da janela principal
 		System.out.print(driver.getWindowHandles()); //id da popup
 		driver.switchTo().window((String)driver.getWindowHandles().toArray()[1]);
@@ -69,6 +75,7 @@ public class TesteFrames_e_Janelas {
 	@Test
 	public void testeFrame2() {
 		driver.switchTo().frame("Frame2");
-		driver.findElement(By.id("frameButton")).click();
+		//driver.findElement(By.id("frameButton")).click();
+		dsl.clicar("frameButton");
 	}
 }
