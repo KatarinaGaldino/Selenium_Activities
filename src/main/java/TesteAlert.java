@@ -2,7 +2,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
@@ -32,46 +31,30 @@ public class TesteAlert {
 	
 	@Test
 	public void testeAlertSimples() {
-		//driver.findElement(By.id("alert")).click();
 		dsl.clicar("alert");
-		Alert alerta = driver.switchTo().alert();
-		String textoAlerta = alerta.getText();
-		Assert.assertEquals("Alert Simples",textoAlerta );
-		alerta.accept();
-		//driver.findElement(By.id("elementosForm:nome")).sendKeys(textoAlerta);
-		dsl.escrever("elementosForm:nome", textoAlerta);
+		String texto = dsl.alertaObterTextoEAceita(); 
+		Assert.assertEquals("Alert Simples", texto);
+		
+		dsl.escrever("elementosForm:nome", texto);
 	}
 	
 	@Test
 	public void testeAlertConfirm() {
-		//driver.findElement(By.id("confirm")).click();
 		dsl.clicar("confirm");
-		Alert alerta = driver.switchTo().alert();
-		Assert.assertEquals("Confirm Simples", alerta.getText());
-		alerta.accept();
-		Assert.assertEquals("Confirmado", alerta.getText());
-		alerta.accept();
+		Assert.assertEquals("Confirm Simples", dsl.alertaObterTextoEAceita());
+		Assert.assertEquals("Confirmado", dsl.alertaObterTextoEAceita());
 		
-		//driver.findElement(By.id("confirm")).click();
 		dsl.clicar("confirm");
-		alerta = driver.switchTo().alert();
-		Assert.assertEquals("Confirm Simples", alerta.getText());
-		alerta.dismiss();
-		Assert.assertEquals("Negado", alerta.getText());
-		alerta.dismiss();
+		Assert.assertEquals("Confirm Simples", dsl.alertaObterTextoENega());
+		Assert.assertEquals("Negado", dsl.alertaObterTextoENega());
 	}
 	
 	@Test
 	public void testeAlertPrompt() {
-		//driver.findElement(By.id("prompt")).click();
 		dsl.clicar("prompt");
-		Alert alerta = driver.switchTo().alert();
-		Assert.assertEquals("Digite um numero", alerta.getText());
-		alerta.sendKeys("12");
-		alerta.accept();
-		Assert.assertEquals("Era 12?", alerta.getText());
-		alerta.accept();
-		Assert.assertEquals(":D", alerta.getText());
-		alerta.accept();
+		Assert.assertEquals("Digite um numero", dsl.alertaObterTexto());
+		dsl.alertaEscrever("12");
+		Assert.assertEquals("Era 12?", dsl.alertaObterTextoEAceita());
+		Assert.assertEquals(":D", dsl.alertaObterTextoEAceita());
 	}
 }

@@ -31,16 +31,14 @@ public class RegrasDeNegocio {
 	@Test
 	public void testeValidaCampoNome() {
 		dsl.clicar("elementosForm:cadastrar");
-		Alert alert = driver.switchTo().alert();
-		Assert.assertEquals("Nome eh obrigatorio" , alert.getText());
+		Assert.assertEquals("Nome eh obrigatorio" , dsl.alertaObterTextoEAceita());
 	}
 	
 	@Test
 	public void testeValidaCampoSobrenome() {
 		dsl.escrever("elementosForm:nome", "Katarina");
 		dsl.clicar("elementosForm:cadastrar");
-		Alert alert = driver.switchTo().alert();
-		Assert.assertEquals("Sobrenome eh obrigatorio" , alert.getText());
+		Assert.assertEquals("Sobrenome eh obrigatorio", dsl.alertaObterTextoEAceita());
 	}
 	
 	@Test
@@ -49,8 +47,7 @@ public class RegrasDeNegocio {
 		dsl.escrever("elementosForm:sobrenome", "Mariano");
 		//driver.findElement(By.id("elementosForm:sexo:1")).click();
 		dsl.clicar("elementosForm:cadastrar");
-		Alert alert = driver.switchTo().alert();
-		Assert.assertEquals("Sexo eh obrigatorio" , alert.getText());
+		Assert.assertEquals("Sexo eh obrigatorio" , dsl.alertaObterTextoEAceita());
 	}
 	
 	@Test
@@ -61,8 +58,7 @@ public class RegrasDeNegocio {
 		dsl.clicar("elementosForm:comidaFavorita:0");
 		dsl.clicar("elementosForm:comidaFavorita:3");
 		dsl.clicar("elementosForm:cadastrar");
-		Alert alert = driver.switchTo().alert();
-		Assert.assertEquals("Tem certeza que voce eh vegetariano?" , alert.getText());
+		Assert.assertEquals("Tem certeza que voce eh vegetariano?" , dsl.alertaObterTextoEAceita());
 	}
 	
 	@Test
@@ -74,8 +70,7 @@ public class RegrasDeNegocio {
 		dsl.selecionaCombo("elementosForm:esportes", "Karate");
 		dsl.selecionaCombo("elementosForm:esportes", "O que eh esporte?");
 		dsl.clicar("elementosForm:cadastrar");
-		Alert alert = driver.switchTo().alert();
-		Assert.assertEquals("Voce faz esporte ou nao?" , alert.getText());
+		Assert.assertEquals("Voce faz esporte ou nao?" , dsl.alertaObterTextoEAceita());
 	}
 	
 }
