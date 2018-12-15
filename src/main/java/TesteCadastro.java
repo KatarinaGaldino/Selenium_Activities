@@ -11,6 +11,7 @@ public class TesteCadastro {
 
 	private WebDriver driver;
 	private MyDSL dsl;
+	private CampoTreinamentoPage page;
 	
 	@Before
 	public void before() {
@@ -20,6 +21,7 @@ public class TesteCadastro {
 		driver.manage().window().setSize(new Dimension(700, 700));
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		dsl = new MyDSL(driver);
+		page = new CampoTreinamentoPage(driver);
 	}
 	
 	@After
@@ -29,20 +31,20 @@ public class TesteCadastro {
 	
 	@Test
 	public void testeCadastrar() {
-		dsl.escrever("elementosForm:nome", "Katarina");
-		dsl.escrever("elementosForm:sobrenome", "Mariano");
-		dsl.clicar("elementosForm:sexo:1");
-		dsl.clicar("elementosForm:comidaFavorita:2");
-		dsl.selecionaCombo("elementosForm:escolaridade", "Mestrado");
-		dsl.selecionaCombo("elementosForm:esportes", "Natacao");
-		dsl.clicar("elementosForm:cadastrar");
+		page.setNome("Katarina");
+		page.setSobrenome("Mariano");
+		page.setSexoFeminino();
+		page.setComidaPizza();
+		page.setEscolaridade("Mestrado");
+		page.setEsporte("Natacao");
+		page.setCadastro();
 		
-		Assert.assertTrue(dsl.pegaTexto("resultado").startsWith("Cadastrado!"));
-		Assert.assertTrue(dsl.pegaTexto("descNome").endsWith("Katarina"));
-		Assert.assertTrue(dsl.pegaTexto("descSobrenome").endsWith("Mariano"));
-		Assert.assertTrue(dsl.pegaTexto("descSexo").endsWith("Feminino"));
-		Assert.assertEquals("Comida: Pizza", dsl.pegaTexto("descComida"));
-		Assert.assertEquals("Escolaridade: mestrado", dsl.pegaTexto("descEscolaridade"));
-		Assert.assertEquals("Esportes: Natacao", dsl.pegaTexto("descEsportes"));
+		Assert.assertTrue(page.getResultado().startsWith("Cadastrado!"));
+		Assert.assertTrue(page.getNome().endsWith("Katarina"));
+		Assert.assertTrue(page.getSobrenome().endsWith("Mariano"));
+		Assert.assertTrue(page.getSexo().endsWith("Feminino"));
+		Assert.assertEquals("Comida: Pizza", page.getComida());
+		Assert.assertEquals("Escolaridade: mestrado", page.getEscolaridade());
+		Assert.assertEquals("Esportes: Natacao", page.getEsporte());
 	}
 }
