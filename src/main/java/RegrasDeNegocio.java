@@ -11,6 +11,7 @@ public class RegrasDeNegocio {
 
 	private WebDriver driver;
 	private MyDSL dsl;
+	private CampoTreinamentoPage page;
 	
 	@Before
 	public void before() {
@@ -20,6 +21,7 @@ public class RegrasDeNegocio {
 		driver.manage().window().setSize(new Dimension(700, 700));
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		dsl = new MyDSL(driver);
+		page = new CampoTreinamentoPage(driver);
 	}
 	
 	@After
@@ -29,46 +31,45 @@ public class RegrasDeNegocio {
 	
 	@Test
 	public void testeValidaCampoNome() {
-		dsl.clicar("elementosForm:cadastrar");
+		page.setCadastro();
 		Assert.assertEquals("Nome eh obrigatorio" , dsl.alertaObterTextoEAceita());
 	}
 	
 	@Test
 	public void testeValidaCampoSobrenome() {
-		dsl.escrever("elementosForm:nome", "Katarina");
-		dsl.clicar("elementosForm:cadastrar");
+		page.setNome("Mariano");
+		page.setCadastro();
 		Assert.assertEquals("Sobrenome eh obrigatorio", dsl.alertaObterTextoEAceita());
 	}
 	
 	@Test
 	public void testeValidaCampoSexo() {
-		dsl.escrever("elementosForm:nome", "Katarina");
-		dsl.escrever("elementosForm:sobrenome", "Mariano");
+		page.setNome("Katarina");
+		page.setSobrenome("Mariano");
 		//driver.findElement(By.id("elementosForm:sexo:1")).click();
-		dsl.clicar("elementosForm:cadastrar");
+		page.setCadastro();
 		Assert.assertEquals("Sexo eh obrigatorio" , dsl.alertaObterTextoEAceita());
 	}
 	
 	@Test
 	public void testeValidaCampoComida() {
-		dsl.escrever("elementosForm:nome", "Katarina");
-		dsl.escrever("elementosForm:sobrenome", "Mariano");
-		dsl.clicar("elementosForm:sexo:1");
-		dsl.clicar("elementosForm:comidaFavorita:0");
-		dsl.clicar("elementosForm:comidaFavorita:3");
-		dsl.clicar("elementosForm:cadastrar");
+		page.setNome("Katarina");
+		page.setSobrenome("Mariano");
+		page.setSexoMasculino();
+		page.setComidaCarne();
+		page.setComidaVegetariano();
+		page.setCadastro();
 		Assert.assertEquals("Tem certeza que voce eh vegetariano?" , dsl.alertaObterTextoEAceita());
 	}
 	
 	@Test
 	public void testeValidaCampoEsportes() {
-		dsl.escrever("elementosForm:nome", "Katarina");
-		dsl.escrever("elementosForm:sobrenome", "Mariano");
-		dsl.clicar("elementosForm:sexo:1");
-		dsl.clicar("elementosForm:comidaFavorita:0");
-		dsl.selecionaCombo("elementosForm:esportes", "Karate");
-		dsl.selecionaCombo("elementosForm:esportes", "O que eh esporte?");
-		dsl.clicar("elementosForm:cadastrar");
+		page.setNome("Katarina");
+		page.setSobrenome("Mariano");
+		page.setSexoMasculino();
+		page.setComidaCarne();
+		page.setEsporte("Karate", "O que eh esporte?" );
+		page.setCadastro();
 		Assert.assertEquals("Voce faz esporte ou nao?" , dsl.alertaObterTextoEAceita());
 	}
 	
