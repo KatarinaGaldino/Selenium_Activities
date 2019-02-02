@@ -45,6 +45,64 @@ public class TesteProjetoLead extends Manager{
 		driver.quit();		
 	}
 	
+	@Test
+	public void testeLogout1() {
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().setPosition(new Point(0, 0));
+		driver.manage().window().setSize(new Dimension(1200, 700));
+		driver.get("https://teste.projetolead.com.br/ead2pcd/app/login?ctrl=1");
+		
+		driver.findElement(By.id("usuario")).sendKeys("alunosurdo");
+		driver.findElement(By.id("senha")).sendKeys("abcd1234");
+		driver.findElement(By.name("_spring_security_remember_me")).click();
+		driver.findElement(By.tagName("button")).click();
+		
+		driver.findElement(By.id("imgUsuario")).click();
+		driver.findElement(By.id("logoff")).click();
+		
+		driver.quit();
+		
+	}
+	@Test
+	public void testeLogout2() {
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().setPosition(new Point(0, 0));
+		driver.manage().window().setSize(new Dimension(700, 700));
+		driver.get("https://teste.projetolead.com.br/ead2pcd/app/login?ctrl=1");
+		
+		driver.findElement(By.id("usuario")).sendKeys("alunosurdo");
+		driver.findElement(By.id("senha")).sendKeys("abcd1234");
+		driver.findElement(By.name("_spring_security_remember_me")).click();
+		driver.findElement(By.tagName("button")).click();
+		
+		driver.findElement(By.id("imgUsuario")).click();
+		driver.findElement(By.id("logoff")).click();
+		
+		driver.quit();
+		
+	}
+	
+	
+	@Test
+	public void testeLogout3() {
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().setPosition(new Point(0, 0));
+		driver.manage().window().setSize(new Dimension(1200, 700));
+		driver.get("https://teste.projetolead.com.br/ead2pcd-spa/");
+		
+		driver.findElement(By.id("login")).sendKeys("alunosurdo");
+		driver.findElement(By.id("inputPassword")).sendKeys("abcd1234");
+		driver.findElement(By.name("remember")).click();
+		driver.findElement(By.tagName("button")).click();
+		
+		driver.findElement(By.id("avatar")).click();
+		driver.findElement(By.id("logout")).click();
+		
+		driver.quit();
+		
+	}
+	
+	
 	
 	
 }
